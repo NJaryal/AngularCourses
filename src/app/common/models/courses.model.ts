@@ -1,6 +1,6 @@
 export class Courses {
-  Id: string;
-  Title: string;
+  id: string;
+  title: string;
   creationdate: Date;
   duration: Date;
   description: string;
