@@ -1,6 +1,19 @@
 <app-header></app-header>
-<div class="container">
-  <app-courses></app-courses>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <breadcrumb #parent>
+              <ol class="breadcrumb">
+                <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+                  <li *ngIf="!route.terminal" class="breadcrumb-item">
+                    <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+                  </li>
+                  <li *ngIf="route.terminal" class="breadcrumb-item active" aria-current="page">{{ route.displayName }}</li>
+                </ng-template>
+              </ol>
+            </breadcrumb>
+        </div>
+    </div>
 </div>
 <app-footer></app-footer>
 <router-outlet></router-outlet>

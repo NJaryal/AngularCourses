@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
+import {BreadcrumbModule} from 'angular-crumbs';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CoursesModule } from './courses/courses.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BreadcrumbModule,
     CoreModule,
     CoursesModule
   ],
