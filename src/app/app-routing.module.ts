@@ -4,7 +4,7 @@ import { CoursesComponent } from './courses/courses/courses.component';
 import { HomeComponent } from './core/home/home.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/courses', pathMatch: 'full'},
   {path: 'home', component: HomeComponent , data: { breadcrumb: 'Home'}},
   {path: 'courses', component: CoursesComponent , data: { breadcrumb: 'Courses'}}
 ];
