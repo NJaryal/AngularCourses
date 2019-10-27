@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesFilterComponent } from './courses-filter/courses-filter.component';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [CoursesComponent, CoursesListComponent, CoursesFilterComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
     CoursesComponent

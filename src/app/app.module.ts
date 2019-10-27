@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
 import {BreadcrumbModule} from 'angular-crumbs';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {BreadcrumbModule} from 'angular-crumbs';
     AppRoutingModule,
     BreadcrumbModule,
     CoreModule,
-    CoursesModule
+    CoursesModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
