@@ -12,4 +12,8 @@ export class CoursesComponent implements OnInit {
   ngOnInit() {
   }
 
+  onDeleteIDEvent(id: string): void {
+    console.log(`Course having ID - ${id} deleted!`);
+  }
+
 }
