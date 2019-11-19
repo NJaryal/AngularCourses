@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { By } from '@angular/platform-browser';
 import { CoursesListComponent } from './courses-list.component';
 import { CoursesService } from 'src/app/common/services/courses.service';
 
@@ -37,10 +37,16 @@ describe('CoursesListComponent', () => {
     ]
 
     courseService.getCourses();
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should handle delete Event handler', () => {
+    fixture.detectChanges();
+    const deleteEvent = spyOn(component, 'onDeleteCourse');
+    fixture.debugElement.query(By.css('button.btn-danger')).triggerEventHandler('click', null);
+    expect(deleteEvent).toHaveBeenCalled();
   });
 });
