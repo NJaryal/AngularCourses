@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CoursesService } from '../../common/services/courses.service';
 import { Courses } from 'src/app/common/models/courses.model';
-import { SortCourseDirectiveDirective } from '../../common/directive/sort-course-directive.directive'
 
 @Component({
   selector: 'app-courses-list',

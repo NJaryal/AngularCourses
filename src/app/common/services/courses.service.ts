@@ -4,11 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CoursesService {
-  currentDate:Date = new Date();
-  randomNumber:number = parseInt((Math.random()*100).toFixed(0));
   constructor() { }
 
-  public getCourses(){
+  public getCourses() {
     return [
       {
         id: "1",
@@ -32,7 +30,7 @@ export class CoursesService {
         creationdate: new Date("25-Jun-2019"),
         duration: "90 min",
         description: "Vue.js is an open-source Model–view–viewmodel JavaScript framework for building user interfaces and single-page applications. It was created by Evan You, and is maintained by him and the rest of the active core team members coming from various companies such as Netlify and Netguru.",
-        toprated: false
+        toprated: true
       }
     ]
   }

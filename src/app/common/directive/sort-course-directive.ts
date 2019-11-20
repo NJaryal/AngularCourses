@@ -3,7 +3,7 @@ import { Directive, ElementRef, OnInit, Input } from '@angular/core';
 @Directive({
   selector: '[sortCourseDirective]'
 })
-export class SortCourseDirective implements OnInit{
+export class SortCourseDirective implements OnInit {
   @Input() creationdate: Date;
   currentElement: ElementRef;
   constructor(private el: ElementRef) {

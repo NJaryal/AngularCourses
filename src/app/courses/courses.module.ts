@@ -4,7 +4,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesFilterComponent } from './courses-filter/courses-filter.component';
 import { FormsModule } from '@angular/forms';
-import { SortCourseDirective } from '../common/directive/sort-course-directive.directive'
+import { SortCourseDirective } from '../common/directive/sort-course-directive';
 
 @NgModule({
   declarations: [CoursesComponent, CoursesListComponent, CoursesFilterComponent, SortCourseDirective],

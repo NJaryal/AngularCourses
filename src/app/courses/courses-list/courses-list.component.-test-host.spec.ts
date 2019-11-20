@@ -2,7 +2,6 @@ import { Component, DebugElement } from '@angular/core';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CoursesListComponent } from './courses-list.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
 
 @Component({
   template: `<app-courses-list (myOutput)=onDeleteIDEvent($event)></app-courses-list>`,

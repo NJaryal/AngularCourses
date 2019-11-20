@@ -2,7 +2,7 @@
   <div class="row m-lg-4 card-body mb-4" *ngFor="let course of courses" sortCourseDirective [creationdate]="course.creationdate | date:'dd-MMM-yyyy'">
     <div class="col-md-10"  >
         <form class="form-inline row no-gutters">
-          <h4 class="card-title col-md-3">{{ course.title }}
+          <h4 class="card-title col-md-3">{{ course.title | uppercase }}
             <i [ngClass]="{'fa fa-star' : course.toprated}">
             </i>
           </h4>
