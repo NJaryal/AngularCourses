@@ -15,11 +15,12 @@ export class SortCourseDirective implements OnInit {
     const currentDate = new Date();
     const previousDate = new Date();
     const backDate = new Date(previousDate.setDate(currentDate.getDate() - 14));
-    if(creationdate < currentDate && creationdate >=backDate)
-    this.currentElement.nativeElement.style.border = '10px solid green';
-    else if(creationdate > currentDate)
-    this.currentElement.nativeElement.style.border = '10px solid blue';
-    else
-    this.currentElement.nativeElement.style.border = 'none';
+    if (creationdate < currentDate && creationdate >= backDate) {
+      this.currentElement.nativeElement.style.border = '10px solid green';
+    } else if (creationdate > currentDate) {
+      this.currentElement.nativeElement.style.border = '10px solid blue';
+    } else {
+      this.currentElement.nativeElement.style.border = 'none';
+    }
   }
 }

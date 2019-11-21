@@ -1,5 +1,24 @@
+<form class="form-group mt-2">
+  <div class=" d-flex justify-content-center">
+    <input
+      type="text"
+      placeholder="Search.."
+      name="Search"
+      [(ngModel)]="searchText"
+    />
+    <button
+      type="submit"
+      class="btn btn-success btn-lg"
+      (click)="searchVal()"
+    >
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</form>
+
+
 <div *ngIf="courses != {}" >
-  <div class="row m-lg-4 card-body mb-4" *ngFor="let course of courses" sortCourseDirective [creationdate]="course.creationdate | date:'dd-MMM-yyyy'">
+  <div class="row m-lg-4 card-body mb-4" *ngFor='let course of courses | filterCourses : searchText' sortCourseDirective [creationdate]="course.creationdate | date:'dd-MMM-yyyy'">
     <div class="col-md-10"  >
         <form class="form-inline row no-gutters">
           <h4 class="card-title col-md-3">{{ course.title | uppercase }}
@@ -9,7 +28,7 @@
           <p class="col-md-9 text-right">
             <span>
               <i class="fa fa-clock-o"></i>
-              {{ course.duration }}
+              {{ course.duration | duration }}
             </span>
             <span>
                 <i class="fa fa-calendar"></i>
