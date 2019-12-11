@@ -11,6 +11,7 @@ export class CoursesListComponent implements OnInit {
   courses: Courses | any;
   @Output() public myOutput = new EventEmitter<string>();
   courseId: string;
+  searchText: string;
 
   constructor(private coursesService: CoursesService) { }
 
@@ -24,6 +25,10 @@ export class CoursesListComponent implements OnInit {
 
   loadMore() {
     console.log("Another course list");
+  }
+
+  searchVal() {
+    console.log(this.searchText);
   }
 
 }

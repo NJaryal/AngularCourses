@@ -4,4 +4,5 @@ export class Courses {
   creationdate: string;
   duration: string;
   description: string;
+  toprated: boolean;
 }
