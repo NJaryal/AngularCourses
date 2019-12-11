@@ -1,11 +1,22 @@
 <app-courses-filter></app-courses-filter>
 <div class="container">
-    <div class="row mb-2">
-        <div class="col-md-12">
-          <button class="btn btn-primary float-right">
-            <i class="fa fa-plus"></i> Add
-          </button>
-        </div>
-      </div>
+  <div class="row mb-2">
+    <div class="col-md-12">
+      <button class="btn btn-primary float-right">
+        <i class="fa fa-plus"></i> Add
+      </button>
+    </div>
+  </div>
 </div>
-<app-courses-list (myOutput)=onDeleteIDEvent($event)></app-courses-list>
+<app-courses-list (myOutput)="onDeleteIDEvent($event)"></app-courses-list>
+<jw-modal id="course-modal-delete">
+  <h4 class="mt-1 mb-4 text-center">Do you really want to delete this course!</h4>
+  <div class="col text-center">
+    <button (click)="closeModal('course-modal-delete')" class="btn btn-success mr-2">
+      YES
+    </button>
+    <button (click)="closeModal('course-modal-delete')" class="btn btn-danger m-auto">
+      NO
+    </button>
+  </div>
+</jw-modal>
