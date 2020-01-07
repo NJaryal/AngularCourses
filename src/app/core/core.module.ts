@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AuthService } from '../common/auth/_services/auth.service';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent],
@@ -14,6 +15,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     RouterModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  providers: [
+    AuthService
   ],
   exports: [
     HeaderComponent,

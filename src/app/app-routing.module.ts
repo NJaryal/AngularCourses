@@ -5,10 +5,10 @@ import { HomeComponent } from './core/home/home.component';
 import { LoginComponent } from './core/login/login.component';
 
 const routes: Routes = [
-  {path: '**', redirectTo: '/courses'},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent , data: { breadcrumb: 'Home'}},
-  {path: 'courses', component: CoursesComponent , data: { breadcrumb: 'Courses'}}
+  {path: 'courses', component: CoursesComponent , data: { breadcrumb: 'Courses'}},
+  {path: '**', redirectTo: '/courses'}
 ];
 
 @NgModule({
