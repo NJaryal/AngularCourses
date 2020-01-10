@@ -19,6 +19,8 @@
       "dom"
     ]
   },
+  "exclude":
+  ["app/main.aot.ts"],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

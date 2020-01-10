@@ -27,5 +27,8 @@ export class CoursesComponent implements OnInit {
       this.modalService.close(id);
   }
 
+  addCourse(id: string) {
+    this.openModal(id);
+  }
 
 }

@@ -1,12 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 
+
+// MUST BE IN THIS ORDER!
+import 'core-js/es7/reflect';
+import 'zone.js/dist/zone';
+import { enableProdMode, NgModule, isDevMode } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { UpgradeModule } from '@angular/upgrade/static';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
 import {BreadcrumbModule} from 'angular-crumbs';
 import { FormsModule } from '@angular/forms';
+
+if (!isDevMode()) {
+  enableProdMode();
+}
 
 
 @NgModule({
@@ -15,13 +25,27 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    UpgradeModule,
     AppRoutingModule,
     BreadcrumbModule,
     CoreModule,
     CoursesModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {}
+  ngDoBootstrap() {
+    // Bootstrap main app
+    this.upgrade.bootstrap(document.body, ['admin']);
+  }
+  }
+
+if (isDevMode()) {
+  platformBrowserDynamic().bootstrapModule(AppModule);
+}
+
+
