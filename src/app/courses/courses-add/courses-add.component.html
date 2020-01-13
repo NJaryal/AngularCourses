@@ -7,7 +7,7 @@
       <form [formGroup]="createCoursessForm">
         <div class="card-body">
           <div class="row">
-            <div class="form-group">
+            <div class="form-group col-md-12">
               <label class="col-form-label" for="textarea-input"
                 >Course Title</label
               >
@@ -42,7 +42,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-12">
               <label class="col-form-label" for="courseDesc">Description</label>
               <textarea
                 class="form-control"
@@ -62,7 +62,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-12">
               <label class="col-form-label" for="courseDuration">Date</label>
               <input
                 type="date"
@@ -86,22 +86,25 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-12">
               <label class="col-form-label" for="messageDuration"
                 >Duration</label
               >
               <input
-                type="date"
+                type="number"
                 class="form-control"
                 placeholder="Enter Duration"
                 autocomplete="duration"
-                formControlName="date"
+                formControlName="duration"
+                [(ngModel)]="courseDuration"
                 [ngClass]="{
                   'is-invalid':
                     createCoursessForm.get('duration').touched &&
                     createCoursessForm.get('duration').invalid
                 }"
               />
+
+              <span >{{courseDuration | duration}}</span>
               <div
                 *ngIf="createCoursessForm.get('duration').errors"
                 class="invalid-feedback"
@@ -111,46 +114,8 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-form-label" for="textarea-input"
-                >Short Description</label
-              >
-              <textarea
-                placeholder="Description"
-                formControlName="description"
-                class="form-control"
-                [ngClass]="{
-                  'is-invalid':
-                    createCoursessForm.get('description').errors &&
-                    (createCoursessForm.get('description').touched ||
-                      createCoursessForm.get('description').dirty)
-                }"
-              ></textarea>
-              <div
-                *ngIf="
-                  createCoursessForm.get('description').touched &&
-                  createCoursessForm.get('description').invalid
-                "
-                class="invalid-feedback"
-              >
-                <div
-                  *ngIf="createCoursessForm.get('description').errors.required"
-                >
-                  Description is required
-                </div>
-                <div
-                  *ngIf="createCoursessForm.get('description').errors.minlength"
-                >
-                  Description must be at least 6 characters
-                </div>
-                <div
-                  *ngIf="createCoursessForm.get('description').errors.maxlength"
-                >
-                  Description max length should be 36 characters
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group col-md-12">
               <label class="col-form-label" for="messageDuration">Author</label>
               <input
                 type="text"
@@ -178,6 +143,7 @@
               </div>
             </div>
           </div>
+
         </div>
         <div class="card-footer">
           <button
