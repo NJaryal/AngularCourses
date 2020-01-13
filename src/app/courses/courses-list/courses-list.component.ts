@@ -15,9 +15,10 @@ export class CoursesListComponent implements OnInit {
   courseId: string;
   searchText: string;
 
-  constructor(private coursesService: CoursesService,private cd: ChangeDetectorRef) { }
+  constructor(private coursesService: CoursesService, private cd: ChangeDetectorRef) { }
   ngOnInit() {
     this.courses = this.coursesService.getList();
+    this.cd.markForCheck();
   }
 
   onDeleteCourse(id: string) {
