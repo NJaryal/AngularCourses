@@ -19,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     BreadcrumbModule,
     CoreModule,
     CoursesModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
