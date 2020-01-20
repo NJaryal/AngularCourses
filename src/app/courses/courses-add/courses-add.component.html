@@ -1,160 +1,248 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <strong>Create Course</strong>
-      </div>
-      <form [formGroup]="createCoursessForm">
-        <div class="card-body">
-          <div class="row">
-            <div class="form-group col-md-12">
-              <label class="col-form-label" for="textarea-input"
-                >Course Title</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Type title"
-                autocomplete="title"
-                formControlName="title"
-                [ngClass]="{
-                  'is-invalid':
-                    createCoursessForm.get('title').touched &&
-                    createCoursessForm.get('title').invalid
-                }"
-              />
-              <div
-                *ngIf="
-                  createCoursessForm.get('title').touched &&
-                  createCoursessForm.get('title').invalid
-                "
-                class="invalid-feedback"
-              >
-                <div *ngIf="createCoursessForm.get('title').errors.required">
-                  Course title is required
-                </div>
-                <div *ngIf="createCoursessForm.get('title').errors.minlength">
-                  Course title must be at least 6 characters
-                </div>
-                <div *ngIf="createCoursessForm.get('title').errors.maxlength">
-                  Course title max length should be 20 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-              <label class="col-form-label" for="courseDesc">Description</label>
-              <textarea
-                class="form-control"
-                placeholder="Description"
-                formControlName="description"
-              ></textarea>
-
-              <div
-                *ngIf="createCoursessForm.get('description').errors"
-                class="invalid-feedback"
-              >
-                <div
-                  *ngIf="createCoursessForm.get('description').errors.required"
-                >
-                  Decription is required
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-              <label class="col-form-label" for="courseDuration">Date</label>
-              <input
-                type="date"
-                class="form-control"
-                placeholder="Enter date"
-                autocomplete="Date"
-                formControlName="date"
-                [ngClass]="{
-                  'is-invalid':
-                    createCoursessForm.get('date').touched &&
-                    createCoursessForm.get('date').invalid
-                }"
-              />
-              <div
-                *ngIf="createCoursessForm.get('date').errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="createCoursessForm.get('date').errors.required">
-                  Date is required
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-              <label class="col-form-label" for="messageDuration"
-                >Duration</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                placeholder="Enter Duration"
-                autocomplete="duration"
-                formControlName="duration"
-                [(ngModel)]="courseDuration"
-                [ngClass]="{
-                  'is-invalid':
-                    createCoursessForm.get('duration').touched &&
-                    createCoursessForm.get('duration').invalid
-                }"
-              />
-
-              <span >{{courseDuration | duration}}</span>
-              <div
-                *ngIf="createCoursessForm.get('duration').errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="createCoursessForm.get('duration').errors.required">
-                  Duration is required
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-              <label class="col-form-label" for="messageDuration">Author</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="author"
-                autocomplete="author"
-                formControlName="author"
-                [ngClass]="{
-                  'is-invalid':
-                    createCoursessForm.get('author').errors &&
-                    (createCoursessForm.get('author').touched ||
-                      createCoursessForm.get('author').dirty)
-                }"
-              />
-              <div
-                *ngIf="
-                  createCoursessForm.get('author').touched &&
-                  createCoursessForm.get('author').invalid
-                "
-                class="invalid-feedback"
-              >
-                <div *ngIf="createCoursessForm.get('author').errors.required">
-                  author is required
-                </div>
-              </div>
-            </div>
+<div class="jw-modal">
+  <div class="jw-modal-body">
+    <div class="row" >
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Create Course</strong>
           </div>
+          <form [formGroup]="createCoursessForm">
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label class="col-form-label" for="textarea-input"
+                    >Course Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Type Course Name"
+                    autocomplete="Name"
+                    formControlName="name"
+                    [ngClass]="{
+                      'is-invalid':
+                        createCoursessForm.get('name').touched &&
+                        createCoursessForm.get('name').invalid
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      createCoursessForm.get('name').touched &&
+                      createCoursessForm.get('name').invalid
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="createCoursessForm.get('name').errors.required">
+                      Course name is required
+                    </div>
+                    <div
+                      *ngIf="createCoursessForm.get('name').errors.minlength"
+                    >
+                      Course name must be at least 6 characters
+                    </div>
+                    <div
+                      *ngIf="createCoursessForm.get('name').errors.maxlength"
+                    >
+                      Course name max length should be 20 characters
+                    </div>
+                  </div>
+                </div>
 
+                <div class="form-group col-md-12">
+                  <label class="col-form-label" for="courseDesc"
+                    >Description</label
+                  >
+                  <textarea
+                    class="form-control"
+                    placeholder="Description"
+                    formControlName="description"
+                  ></textarea>
+
+                  <div
+                    *ngIf="createCoursessForm.get('description').errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        createCoursessForm.get('description').errors.required
+                      "
+                    >
+                      Decription is required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label class="col-form-label" for="courseDuration"
+                    >Date</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Enter date"
+                    autocomplete="Date"
+                    formControlName="date"
+                    [ngClass]="{
+                      'is-invalid':
+                        createCoursessForm.get('date').touched &&
+                        createCoursessForm.get('date').invalid
+                    }"
+                  />
+                  <div
+                    *ngIf="createCoursessForm.get('date').errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="createCoursessForm.get('date').errors.required">
+                      Date is required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="isTopRated"
+                      id="courseTopRated"
+                      value="true"
+                      formControlName="isTopRated"
+                      value="option1"
+                      [ngClass]="{
+                        'is-invalid':
+                          createCoursessForm.get('isTopRated').touched &&
+                          createCoursessForm.get('isTopRated').invalid
+                      }"
+                    />
+                    <label class="form-check-label" for="courseTopRated">
+                      Course - Top rated
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="isTopRated"
+                      id="courseNotTopRated"
+                      value="false"
+                      formControlName="isTopRated"
+                      [ngClass]="{
+                        'is-invalid':
+                          createCoursessForm.get('isTopRated').touched &&
+                          createCoursessForm.get('isTopRated').invalid
+                      }"
+                    />
+                    <label class="form-check-label" for="courseNotTopRated">
+                      Course - Not Top Rated
+                    </label>
+                  </div>
+                  <!-- <div
+                    *ngIf="createCoursessForm.get('isTopRated').errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="createCoursessForm.get('isTopRated').errors.required">
+                      IsTopRated is required
+                    </div>
+                  </div> -->
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label class="col-form-label" for="messageDuration"
+                    >Duration</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter Duration"
+                    autocomplete="duration"
+                    formControlName="length"
+                    [(ngModel)]="courseDuration"
+                    [ngClass]="{
+                      'is-invalid':
+                        createCoursessForm.get('length').touched &&
+                        createCoursessForm.get('length').invalid
+                    }"
+                  />
+
+                  <span>{{ courseDuration | duration }}</span>
+                  <div
+                    *ngIf="createCoursessForm.get('length').errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="createCoursessForm.get('length').errors.required"
+                    >
+                      Duration is required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label class="col-form-label" for="messageDuration"
+                    >Authors</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="authors"
+                    autocomplete="authors"
+                    formControlName="authors"
+                    [ngClass]="{
+                      'is-invalid':
+                        createCoursessForm.get('authors').errors &&
+                        (createCoursessForm.get('authors').touched ||
+                          createCoursessForm.get('authors').dirty)
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      createCoursessForm.get('authors').touched &&
+                      createCoursessForm.get('authors').invalid
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="createCoursessForm.get('authors').errors.required"
+                    >
+                      Authors field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                class="btn btn-sm btn-success"
+                type="submit"
+                (click)="saveItem()"
+              >
+                <i class="fa fa-dot-circle-o"></i> Save
+              </button>
+            </div>
+          </form>
         </div>
-        <div class="card-footer">
-          <button
-            class="btn btn-sm btn-success"
-            type="submit"
-            (click)="saveItem()"
-          >
-            <i class="fa fa-dot-circle-o"></i> Save
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
+<div class="jw-modal-background"></div>
+
+<!-- <jw-modal id="course-modal-delete">
+  <h4 class="mt-1 mb-4 text-center">
+    Do you really want to delete this course!
+  </h4>
+  <div class="col text-center">
+    <button
+      (click)="onDeleteCourse('')"
+      class="btn btn-success mr-2"
+    >
+      YES
+    </button>
+    <button
+      (click)="closeModal('course-modal-delete')"
+      class="btn btn-danger m-auto"
+    >
+      NO
+    </button>
+  </div>
+</jw-modal> -->

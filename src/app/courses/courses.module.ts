@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesComponent } from './courses/courses.component';
@@ -8,15 +9,17 @@ import { CoursesAddComponent } from './courses-add/courses-add.component';
 import { DurationPipe } from '../common/pipe/duration.pipe';
 import { FilterCoursesPipe } from '../common/pipe/filter-courses.pipe';
 import { SortCourseDirective } from '../common/directive/sort-course-directive';
+import { CourseDetailedComponent } from './course-detailed/course-detailed.component';
 
 
 @NgModule({
-  declarations: [CoursesComponent, CoursesListComponent, CoursesAddComponent, DurationPipe, FilterCoursesPipe, SortCourseDirective],
+  declarations: [CoursesComponent, CoursesListComponent, CoursesAddComponent, DurationPipe, FilterCoursesPipe, SortCourseDirective, CourseDetailedComponent],
   imports: [
     CommonModule,
     FormsModule,
     ModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     CoursesComponent,

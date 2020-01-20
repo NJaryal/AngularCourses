@@ -7,9 +7,10 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthService } from '../common/auth/_services/auth.service';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent],
+  declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent, NotFoundComponent],
   imports: [
     CommonModule,
     RouterModule,

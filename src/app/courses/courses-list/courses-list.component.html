@@ -21,18 +21,18 @@
   <div class="row m-lg-4 card-body mb-4" *ngFor='let course of courses | filterCourses : searchText' sortCourseDirective [creationdate]="course.creationdate | date:'dd-MMM-yyyy'">
     <div class="col-md-10"  >
         <form class="form-inline row no-gutters">
-          <h4 class="card-title col-md-3">{{ course.title | uppercase }}
-            <i [ngClass]="{'fa fa-star' : course.toprated}">
+          <h4 class="card-title col-md-6">{{ course.name | uppercase }}
+            <i [ngClass]="{'fa fa-star' : course.isTopRated}">
             </i>
           </h4>
-          <p class="col-md-9 text-right">
+          <p class="col-md-6 text-right">
             <span>
               <i class="fa fa-clock-o"></i>
-              {{ course.duration | duration }}
+              {{ course.length | duration }}
             </span>
             <span>
                 <i class="fa fa-calendar"></i>
-              {{ course.creationdate | date:'dd-MMM-yyyy'}}
+              {{ course.date | date:'dd-MMM-yyyy'}}
             </span>
           </p>
         </form>
@@ -42,10 +42,10 @@
     </div>
     <div class="col-md-2 d-flex justify-content-center align-items-center">
       <div class="btn-group-vertical pull-right" role="group">
-        <button type="button" class="btn btn-primary btn-sm mb-1">
+        <button type="button" class="btn btn-primary btn-sm mb-1" [routerLink]="'/courses/edit/'+course.id">
           <i class="fa fa-edit" aria-hidden="true"></i> Edit
         </button>
-        <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteCourse(course.id)">
+        <button type="button" class="btn btn-danger btn-sm" [routerLink]="'/courses/delete/'+course.id">
           <i class="fa fa-trash" aria-hidden="true"></i> Delete
         </button>
       </div>
