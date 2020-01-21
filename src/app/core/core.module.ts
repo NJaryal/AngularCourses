@@ -6,25 +6,24 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AuthService } from '../common/auth/_services/auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent, NotFoundComponent],
+  declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent, NotFoundComponent, RegisterComponent],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [
-    AuthService
-  ],
+  providers: [],
   exports: [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ]
 })
 export class CoreModule { }
