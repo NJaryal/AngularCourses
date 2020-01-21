@@ -1,8 +1,9 @@
 export class Courses {
   id: string;
-  title: string;
-  creationdate: string;
-  duration: string;
+  name: string;
+  date: string;
+  length: string;
   description: string;
-  toprated: boolean;
+  isTopRated: boolean;
+  authors?: { id: string, name: string }[];
 }

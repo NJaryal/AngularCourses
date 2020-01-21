@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CoursesService } from 'src/app/common/services/courses.service';
-import { ModalService } from 'src/app/common/modal/modal.service';
 
 @Component({
   selector: 'app-courses',
@@ -9,26 +8,30 @@ import { ModalService } from 'src/app/common/modal/modal.service';
 })
 export class CoursesComponent implements OnInit {
 
-  constructor(private coursesService: CoursesService, private modalService: ModalService) { }
+  constructor(
+    private coursesService: CoursesService
+  ) { }
 
   ngOnInit() {
+
   }
 
-  onDeleteIDEvent(id: string): void {
-    this.openModal('course-modal-delete');
-    this.coursesService.deleteItem(id);
-  }
+  // onDeleteIDEvent(id: string): void {
+  //   this.openModal('course-modal-delete');
+  //   this.coursesService.deleteItem(id);
+  // }
 
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
+  // openModal(id: string) {
+  //   this.modalService.open(id);
+  // }
 
-  closeModal(id: string) {
-      this.modalService.close(id);
-  }
+  // closeModal(id: string) {
+  //     this.modalService.close(id);
+  // }
 
-  addCourse(id: string) {
-    this.openModal(id);
-  }
+  // addCourse(id: string) {
+  //   this.openModal(id);
+  // }
+
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { CoursesService } from '../../common/services/courses.service';
 import { Courses } from 'src/app/common/models/courses.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses-list',
@@ -12,17 +13,31 @@ export class CoursesListComponent implements OnInit {
   @Input() courseList: Courses;
   courses: Courses | any;
   @Output() public myOutput = new EventEmitter<string>();
+  @Output() public myEditEvent = new EventEmitter<string>();
   courseId: string;
   searchText: string;
 
-  constructor(private coursesService: CoursesService, private cd: ChangeDetectorRef) { }
+  constructor(
+    private coursesService: CoursesService,
+    private cd: ChangeDetectorRef,
+    private router: Router
+  ) { }
   ngOnInit() {
-    this.courses = this.coursesService.getList();
+    this.coursesService.getList().subscribe(
+      (res: any) => this.courses = res
+    );
+    if (this.courses && this.courses.length === 1) {
+      this.router.navigate(['courses/courseId'], { queryParams: { courseId: this.courses[0].id }});
+    }
     this.cd.markForCheck();
   }
 
   onDeleteCourse(id: string) {
     this.myOutput.emit(id);
+  }
+
+  onEditCourse(id: string) {
+    this.myEditEvent.emit(id);
   }
 
   loadMore() {
