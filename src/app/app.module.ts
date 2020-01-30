@@ -8,11 +8,16 @@ import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
 import {BreadcrumbModule} from 'angular-crumbs';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthGuard } from './common/auth/_guards/auth.guard';
+import { AlertService, AuthService, UserService } from './common/auth/_services';
+import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './common/_helpers';
+import { AlertComponent } from './common/alert/alert.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,15 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     RouterModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AlertService,
+    AuthService,
+    UserService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

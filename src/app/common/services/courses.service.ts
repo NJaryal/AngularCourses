@@ -12,7 +12,7 @@ export class CoursesService {
   constructor(private http: HttpClient) { }
 
   public getList() {
-    return this.http.get<Courses>(`${environment.coursesApi}/courses?start=0&count=4`);
+    return this.http.get<Courses>(`${environment.coursesApi}/courses`);
   }
 
   public createCourse(course: any) {
@@ -27,7 +27,7 @@ export class CoursesService {
     return this.http.put<string>(`${environment.coursesApi}/courses`, course);
   }
 
-  public deleteItem(id: string) {
-    return console.log(`Course having ID ${id} deleted`);
+  public deleteItem(courseId: string) {
+    return this.http.delete<string>(`${environment.coursesApi}/courses/${courseId}`);
   }
 }

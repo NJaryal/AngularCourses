@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  coursesApi: 'https://videoportal-app.herokuapp.com'
+  coursesApi: 'https://videoportal-app.herokuapp.com',
+  apiUrl: 'http://localhost:4200'
 };
 
 /*

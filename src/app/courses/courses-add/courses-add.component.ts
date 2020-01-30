@@ -28,7 +28,7 @@ export class CoursesAddComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       length: ['', [Validators.required]],
-      authors: new FormArray([]),
+      authors: new Array(),
       date: ['', [Validators.required]],
       isTopRated: ['', [Validators.required]]
     });
