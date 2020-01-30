@@ -4,6 +4,9 @@ import { Courses } from 'src/app/common/models/courses.model';
 import { CoursesService } from '../../common/services/courses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoaderService } from 'src/app/common/services/loader.service';
+import * as courseActions from "../../store/actions/course.actions";
+import * as fromCourse from "../../store/reducers";
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -23,7 +26,8 @@ export class CoursesAddComponent implements OnInit {
     private coursesService: CoursesService,
     private router: Router,
     private route: ActivatedRoute,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private store: Store<fromCourse.State>
   ) { }
 
   ngOnInit() {
@@ -52,10 +56,21 @@ export class CoursesAddComponent implements OnInit {
         this.isFullScreenLoader = false;
       });
     } else {
+      const newCourse: Courses = {
+        name: this.createCoursessForm.get("name").value,
+        description: this.createCoursessForm.get("description").value,
+        length: this.createCoursessForm.get("length").value,
+        authors: this.createCoursessForm.get("authors").value,
+        date: this.createCoursessForm.get("date").value,
+        isTopRated: this.createCoursessForm.get("isTopRated").value
+      };
+      //this.store.dispatch(new customerActions.CreateCustomer(newCourse));
       this.coursesService.createCourse(this.createCoursessForm.value).subscribe((res) => {
         this.router.navigate(['/courses/list']);
+        this.createCoursessForm.reset();
         this.isFullScreenLoader = false;
       });
+
     }
 
   }

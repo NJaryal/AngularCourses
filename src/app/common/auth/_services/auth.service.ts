@@ -1,13 +1,10 @@
 import { LoaderService } from './../../services/loader.service';
-import { Observable } from 'rxjs';
-import { of, Subject } from 'rxjs';
-// import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { User } from './../../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, delay } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -35,9 +32,6 @@ export class AuthService {
       this.persistUser(user);
       this.loaderService.isFullScreenLoader = false;
     });
-    // this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username: username, password: password }).subscribe(
-    //   res => { }
-    // )
   }
 
   persistUser(user: User) {

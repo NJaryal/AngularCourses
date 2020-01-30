@@ -3,7 +3,7 @@
     <input
       type="text"
       placeholder="Search.."
-      name="Search" #movieSearchInput [(ngModel)]="searchText" />
+      name="Search" #courseSearchInput [(ngModel)]="searchText" />
     <button type="submit" class="d-none btn btn-success btn-lg" (click)="searchVal()">
       <i class="fa fa-search"></i>
     </button>
@@ -14,7 +14,7 @@
   <div
     class="row m-lg-4 card-body mb-2"
     *ngFor="
-      let course of courses | paginate: config
+      let course of (courses$ | async) | paginate: config
     "
     sortCourseDirective
     [creationdate]="course.creationdate | date: 'dd-MMM-yyyy'"

@@ -13,7 +13,9 @@ import {
 import { fromEvent } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from 'src/app/common/services/loader.service';
-
+import { Store, State, select } from "@ngrx/store";
+import * as courseActions from "../../store/actions/course.actions";
+import * as fromCourse from "../../store/reducers";
 
 @Component({
   selector: 'app-courses-list',
@@ -22,13 +24,14 @@ import { LoaderService } from 'src/app/common/services/loader.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-
-  @ViewChild('movieSearchInput',{static: true}) movieSearchInput: ElementRef;
+  courses$: Observable<Courses[]>;
+  error$: Observable<String>;
+  @ViewChild('courseSearchInput',{static: true}) courseSearchInput: ElementRef;
   apiResponse:any;
   isSearching:boolean;
   @Input() courseList: Courses;
   courses: Courses | any;
-   data$: Observable<string[]>;
+  data$: Observable<string[]>;
   list$: Observable<string[]>;
   @Output() public myOutput = new EventEmitter<string>();
   @Output() public myEditEvent = new EventEmitter<string>();
@@ -42,7 +45,8 @@ export class CoursesListComponent implements OnInit {
     private router: Router,
     private modalService: ModalService,
     private spinner: NgxSpinnerService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private store: Store<fromCourse.State>
   ) {
     this.spinner.show();
     this.coursesService.getList().subscribe(
@@ -56,19 +60,19 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.store.dispatch(new courseActions.LoadCourses());
+    this.courses$ = this.store.pipe(select(fromCourse.getCurrentCourse));
+    //this.error$ = this.store.pipe(select(fromCourse));
+
     this.spinner.show();
-    fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
-      // get value
+    fromEvent(this.courseSearchInput.nativeElement, 'keyup').pipe(
       map((event: any) => {
         return event.target.value;
       })
-      // if character length greater then 2
       ,filter(res => res.length > 3)
-      // Time in milliseconds between key events
       ,debounceTime(1000)
-      // If previous query is diffent from current
       ,distinctUntilChanged()
-      // subscription for response
       ).subscribe((text: string) => {
         this.isSearching = true;
         this.coursesService.getItemByText(text).subscribe((res)=>{
@@ -118,6 +122,7 @@ export class CoursesListComponent implements OnInit {
 
   deletedCourse(id: string) {
     this.loaderService.isFullScreenLoader = true;
+    this.store.dispatch(new courseActions.DeleteCourses(this.courses.id));
     this.coursesService.deleteItem(id).
       subscribe(
         data => {
