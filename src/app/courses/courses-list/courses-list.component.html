@@ -3,20 +3,18 @@
     <input
       type="text"
       placeholder="Search.."
-      name="Search"
-      [(ngModel)]="searchText"
-    />
-    <button type="submit" class="btn btn-success btn-lg" (click)="searchVal()">
+      name="Search" #movieSearchInput [(ngModel)]="searchText" />
+    <button type="submit" class="d-none btn btn-success btn-lg" (click)="searchVal()">
       <i class="fa fa-search"></i>
     </button>
   </div>
 </form>
-
+<ngx-spinner></ngx-spinner>
 <div *ngIf="courses">
   <div
     class="row m-lg-4 card-body mb-2"
     *ngFor="
-      let course of courses | filterCourses: searchText | paginate: config
+      let course of courses | paginate: config
     "
     sortCourseDirective
     [creationdate]="course.creationdate | date: 'dd-MMM-yyyy'"

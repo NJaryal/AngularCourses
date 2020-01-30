@@ -226,23 +226,4 @@
   </div>
 </div>
 <div class="jw-modal-background"></div>
-
-<!-- <jw-modal id="course-modal-delete">
-  <h4 class="mt-1 mb-4 text-center">
-    Do you really want to delete this course!
-  </h4>
-  <div class="col text-center">
-    <button
-      (click)="onDeleteCourse('')"
-      class="btn btn-success mr-2"
-    >
-      YES
-    </button>
-    <button
-      (click)="closeModal('course-modal-delete')"
-      class="btn btn-danger m-auto"
-    >
-      NO
-    </button>
-  </div>
-</jw-modal> -->
+<div class="loading" *ngIf="isFullScreenLoader">Loading&#8230;</div>

@@ -13,6 +13,8 @@ import { AuthGuard } from './common/auth/_guards/auth.guard';
 import { AlertService, AuthService, UserService } from './common/auth/_services';
 import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './common/_helpers';
 import { AlertComponent } from './common/alert/alert.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoaderService } from './common/services/loader.service';
 
 @NgModule({
   declarations: [
@@ -27,13 +29,15 @@ import { AlertComponent } from './common/alert/alert.component';
     CoursesModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthGuard,
     AlertService,
     AuthService,
     UserService,
+    LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     fakeBackendProvider

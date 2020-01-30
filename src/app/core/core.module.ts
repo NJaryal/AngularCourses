@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { LoaderService } from '../common/services/loader.service';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent, NotFoundComponent, RegisterComponent],
@@ -15,9 +17,12 @@ import { RegisterComponent } from './register/register.component';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
-  providers: [],
+  providers: [
+    LoaderService
+  ],
   exports: [
     HeaderComponent,
     FooterComponent,

@@ -1,3 +1,4 @@
+import { AuthGuard } from './common/auth/_guards/auth.guard';
 import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -18,22 +19,26 @@ const routes: Routes = [
       {
         path: 'list',
         component: CoursesListComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'new',
         component: CoursesAddComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'edit/:id',
         component: CoursesAddComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: ':id',
         component: CourseDetailedComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },
-  { path: '', redirectTo: '/courses', pathMatch: 'full' },
+  { path: '', redirectTo: '/courses/list', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }
 ];

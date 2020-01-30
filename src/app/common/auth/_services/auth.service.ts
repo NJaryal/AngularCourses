@@ -1,35 +1,57 @@
+import { LoaderService } from './../../services/loader.service';
+import { Observable } from 'rxjs';
+import { of, Subject } from 'rxjs';
+// import { Observable } from 'rxjs';
+import { User } from './../../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import {environment} from '../../../../environments/environment';
+import { map, delay } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
-    constructor(private http: HttpClient,
-                private router: Router) { }
+  userSubject: Subject<User>;
 
-    login(username: string, password: string) {
-        this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username: username, password: password })
-            /* .pipe(map(user => {
-                if (user && user.token) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+  constructor(private http: HttpClient,
+    private router: Router,
+    public loaderService: LoaderService
 
-                return user;
-            }));
-          */
-        if(username==='test'&&password==='test1234'){
-          localStorage.setItem('currentUser','34589798vfjkdfgjkljdslk094345rf');
-          this.router.navigate(['courses/list']);
-        } else {
-          localStorage.setItem('currentUser','Unauthorized');
-          this.router.navigate(['/login']);
-        }
-    }
+  ) {
+    this.userSubject = new Subject<User>();
+  }
 
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-    }
+  mockLoginAPI(username: string, password: string): Observable<User> {
+    return of({
+      firstname: 'Nitin',
+      lastname: 'Jryal',
+      id: '34589798vfjkdfgjkljdslk094345rf'
+    } as User).pipe(delay(1500));
+
+  }
+  login(username: string, password: string) {
+    this.loaderService.isFullScreenLoader = true;
+    this.mockLoginAPI(username, password).subscribe(user => {
+      this.persistUser(user);
+      this.loaderService.isFullScreenLoader = false;
+    });
+    // this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username: username, password: password }).subscribe(
+    //   res => { }
+    // )
+  }
+
+  persistUser(user: User) {
+    this.userSubject.next(user);
+    localStorage.setItem('currentUser', user.id);
+    this.router.navigate(['courses/list']);
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    this.loaderService.isFullScreenLoader = true;
+    this.userSubject.next(null);
+    localStorage.removeItem('currentUser');
+    this.loaderService.isFullScreenLoader = false;
+    this.router.navigate(['/login']);
+  }
 }
