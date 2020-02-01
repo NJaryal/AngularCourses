@@ -5,10 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService, AlertService } from '../../common/auth/_services';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.states';
+import { AppState,selectAuthenticationState  } from '../../store/app.state';
 import { User } from 'src/app/common/models/user.model';
 import { Observable } from 'rxjs';
-import { LogIn } from 'src/app/store/actions/auth.actions';
+import { Login } from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +17,15 @@ import { LogIn } from 'src/app/store/actions/auth.actions';
 })
 
 export class LoginComponent implements OnInit {
+
+  user: User = new User();
+  getState: Observable<any>;
+  errorMessage: string = null;
+
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
-  user: User = new User();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +36,7 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public mainService: LoaderService,
     private store: Store<AppState>
-  ) { }
+  ) {  this.getState = this.store.select(selectAuthenticationState);}
 
   ngOnInit() {
     this.spinner.show();
@@ -41,7 +45,9 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
     this.spinner.hide();
-
+    this.getState.subscribe((state) => {
+      this.errorMessage = state.errorMessage;
+    });
     // reset login status
     this.authenticationService.logout();
 
@@ -54,25 +60,17 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.spinner.show();
-
-    this.submitted = true;
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value);
-    if (localStorage.getItem('currentUser') === 'Unauthorized') {
-      alert("Unauthorized User");
-      this.loading = false;
-    }
-    this.spinner.hide();
-    const payload = {
-      email: this.user.username,
-      password: this.user.password
+    const actionPayload = {
+      username: this.loginForm.value["username"],
+      password: this.loginForm.value["password"]
     };
-    this.store.dispatch(new LogIn(payload));
+    this.store.dispatch(new Login(actionPayload));
+    this.spinner.hide();
   }
 }
 

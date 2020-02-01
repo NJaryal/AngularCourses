@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+ import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import {Courses } from '../../common/models/courses.model';
 
@@ -20,13 +20,13 @@ export enum CourseActionTypes {
 export class LoadCourses implements Action {
   readonly type = CourseActionTypes.LOAD_COURSES;
 
-  constructor(public payload: number) {}
+  constructor() {}
 }
 
 export class LoadCoursesSuccess implements Action {
   readonly type = CourseActionTypes.LOAD_COURSES_SUCCESS;
 
-  constructor(public payload: Courses) {}
+  constructor(public payload: any) {}
 }
 
 export class LoadCoursesFail implements Action {
@@ -92,7 +92,7 @@ export class DeleteCoursesFail implements Action {
 
 
 
-export type Action =
+export type courseAction =
     LoadCourses
   | LoadCoursesSuccess
   | LoadCoursesFail
@@ -105,3 +105,4 @@ export type Action =
   | DeleteCourses
   | DeleteCoursesSuccess
   | DeleteCoursesFail;
+

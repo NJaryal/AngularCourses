@@ -16,7 +16,10 @@ import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './common/
 import { AlertComponent } from './common/alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderService } from './common/services/loader.service';
-import { reducer } from './store/reducers';
+import { reducer } from './store/reducers/auth.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthenticationEffects } from './store/effects/auth.effects';
+import { reducers } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { reducer } from './store/reducers';
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(reducer)
+    EffectsModule.forRoot([AuthenticationEffects]),
+    StoreModule.forRoot(reducers, {})
   ],
   providers: [
     AuthGuard,

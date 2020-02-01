@@ -1,6 +1,5 @@
-import { AppState } from './../app.states';
-import { initialState } from './auth.reducers';
-import { Action } from '@ngrx/store';
+import { AppState } from './../app.state';
+import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as courseActions from '../actions/course.actions';
 import { Store, State, select } from "@ngrx/store";
 import { CreateCourses } from '../actions/course.actions';
@@ -14,11 +13,11 @@ export interface CoursesState extends EntityState<Courses> {
   error: string;
 }
 
-export interface AppState extends fromRoot.AppState {
+ export interface IAppState extends EntityState<Courses> {
   courses : CoursesState;
 }
 
-export const  customerAdapter: EntityAdapter<Courses> = createEntityAdapter<Courses>();
+export const  courseAdapter: EntityAdapter<Courses> = createEntityAdapter<Courses>();
 
 export const defaultCourse = {
   ids:  [],
@@ -29,17 +28,17 @@ export const defaultCourse = {
   error: ""
 };
 
-export const initialState = customerAdapter.getInitialState(defaultCourse);
+export const initialState:CoursesState = courseAdapter.getInitialState(defaultCourse);
 
 export function courseReducer(
   state = initialState,
-  action: courseActions.Action
+  action: courseActions.courseAction
 ): CoursesState {
   switch (action.type) {
 
-    // LOAD CUSTOMERS
+    // LOAD COURSES
     case courseActions.CourseActionTypes.LOAD_COURSES_SUCCESS: {
-      return customerAdapter.addAll(action.payload, {
+      return courseAdapter.addAll(action.payload, {
         ...state,
         loading: false,
         loaded: true
@@ -55,9 +54,9 @@ export function courseReducer(
       };
     }
 
-    // CREATE CUSTOMER
+    // CREATE COURSE
     case courseActions.CourseActionTypes.CREATE_COURSES_SUCCESS: {
-      return customerAdapter.addOne(action.payload, state);
+      return courseAdapter.addOne(action.payload, initialState);
     }
     case courseActions.CourseActionTypes.CREATE_COURSES_FAIL: {
       return {
@@ -65,13 +64,13 @@ export function courseReducer(
         entities: {},
         loading: false,
         loaded: false,
-        error: action.payload
+        error: "Fail"
       };
     }
 
-    // UPDATE CUSTOMER
+    // UPDATE COURSE
     case courseActions.CourseActionTypes.UPDATE_COURSES_SUCCESS: {
-      return customerAdapter.updateOne(action.payload, state);
+      return courseAdapter.updateOne(action.payload, state);
     }
     case courseActions.CourseActionTypes.UPDATE_COURSES_FAIL: {
       return {
@@ -83,9 +82,9 @@ export function courseReducer(
       };
     }
 
-    // DELETE CUSTOMER
+    // DELETE COURSE
     case courseActions.CourseActionTypes.DELETE_COURSES_SUCCESS: {
-      return customerAdapter.removeOne(action.payload, state);
+      return courseAdapter.removeOne(action.payload, state);
     }
     case courseActions.CourseActionTypes.DELETE_COURSES_FAIL: {
       return {
@@ -104,13 +103,36 @@ export function courseReducer(
   }
 }
 
+const getCoursesFeatureState = createFeatureSelector<CoursesState>(
+  "courses;"
+)
+
+export const getCourses = createSelector(
+  getCoursesFeatureState,
+  courseAdapter.getSelectors().selectAll
+);
+
+export const getError = createSelector(
+  getCoursesFeatureState,
+  (state: CoursesState) => state.error
+)
+
 
 export const getCurrentCourseId = createSelector(
-  getCustomerFeatureState,
-  (state: CourseState) => state.selectedCustomerId
+  getCoursesFeatureState,
+  (state: CoursesState) => state.ids
 );
+
 export const getCurrentCourse = createSelector(
-  getCustomerFeatureState,
-  getCurrentCustomerId,
-  state => state.entities[state.selectedCustomerId]
+  getCoursesFeatureState,
+  getCurrentCourseId,
+  state => state.entities
 );
+
+
+
+
+
+
+
+

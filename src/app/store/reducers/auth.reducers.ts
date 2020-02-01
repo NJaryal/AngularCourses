@@ -1,25 +1,26 @@
-import { User } from '../../common/models/user.model';
-import { AuthActionTypes, All } from '../actions/auth.actions';
+//authentication.reducer.ts
+import { User } from './../../common/models/user.model';
+import { AuthenticationActionTypes, AuthenticationActions } from '../actions/auth.actions';
 
 export interface State {
-  // is a user authenticated?
   isAuthenticated: boolean;
-  // if authenticated, there should be a user object
   user: User | null;
-  // error message
   errorMessage: string | null;
 }
 
+//set the initial state with localStorage
 export const initialState: State = {
-  isAuthenticated: false,
-  user: null,
+  isAuthenticated: localStorage.getItem('token')!==null,
+  user: {
+          token: localStorage.getItem('token'),
+          username: localStorage.getItem('username')
+        },
   errorMessage: null
 };
 
-
-export function reducer(state = initialState, action: All): State {
+export function reducer(state = initialState, action: AuthenticationActions): State {
   switch (action.type) {
-    case AuthActionTypes.LOGIN_SUCCESS: {
+    case AuthenticationActionTypes.LOGIN_SUCCESS: {
       return {
         ...state,
         isAuthenticated: true,
@@ -30,11 +31,14 @@ export function reducer(state = initialState, action: All): State {
         errorMessage: null
       };
     }
-    case AuthActionTypes.LOGIN_FAILURE: {
+    case AuthenticationActionTypes.LOGIN_FAILURE: {
       return {
         ...state,
-        errorMessage: 'Incorrect email and/or password.'
+        errorMessage: 'Wrong credentials.'
       };
+    }
+    case AuthenticationActionTypes.LOGOUT: {
+      return initialState;
     }
     default: {
       return state;

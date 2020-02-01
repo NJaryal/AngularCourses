@@ -1,28 +1,34 @@
+//authentication.actions.ts
 import { Action } from '@ngrx/store';
 
-
-export enum AuthActionTypes {
-  LOGIN = '[Auth] Login',
-  LOGIN_SUCCESS = '[Auth] Login Success',
-  LOGIN_FAILURE = '[Auth] Login Failure',
+export enum AuthenticationActionTypes {
+  LOGIN = '[Authentication] Login',
+  LOGIN_SUCCESS = '[Authentication] Login Success',
+  LOGIN_FAILURE = '[Authentication] Login Failure',
+  LOGOUT = '[Authentication] Logout',
 }
 
-export class LogIn implements Action {
-  readonly type = AuthActionTypes.LOGIN;
+export class Login implements Action {
+  readonly type = AuthenticationActionTypes.LOGIN;
   constructor(public payload: any) {}
 }
 
-export class LogInSuccess implements Action {
-  readonly type = AuthActionTypes.LOGIN_SUCCESS;
+export class LoginSuccess implements Action {
+  readonly type = AuthenticationActionTypes.LOGIN_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export class LogInFailure implements Action {
-  readonly type = AuthActionTypes.LOGIN_FAILURE;
+export class LoginFailure implements Action {
+  readonly type = AuthenticationActionTypes.LOGIN_FAILURE;
   constructor(public payload: any) {}
 }
 
-export type All =
-  | LogIn
-  | LogInSuccess
-  | LogInFailure;
+export class Logout implements Action {
+  readonly type = AuthenticationActionTypes.LOGOUT;
+}
+
+export type AuthenticationActions =
+  | Login
+  | LoginSuccess
+  | LoginFailure
+  | Logout;

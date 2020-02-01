@@ -7,7 +7,7 @@ import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { CoursesService } from '../common/services/courses.service';
-import { CourseActionTypes, All } from './actions/course.actions';
+//import { CourseActionTypes, All } from './actions/course.actions';
 import * as courseActions from './actions/course.actions';
 
 @Injectable()
@@ -35,6 +35,24 @@ export class CourseEffects {
       )
     )
   );
+
+  @Effect()
+  loadCourses$: Observable<Action> = this.actions$.pipe(
+    ofType<courseActions.LoadCourses>(
+      courseActions.CourseActionTypes.LOAD_COURSES
+    ),
+    mergeMap((action: courseActions.LoadCourses) =>
+      this.customerService.getList().pipe(
+        map(
+          (customers: Courses) =>
+            new courseActions.LoadCoursesSuccess(customers)
+        ),
+        catchError(err => of(new courseActions.LoadCoursesFail(err)))
+      )
+    )
+  );
+
+// LOAD CUSTOMER
 
 
 /*   //Update
@@ -74,7 +92,6 @@ export class CourseEffects {
 
 
 }
-
 
 
 
