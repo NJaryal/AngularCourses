@@ -11,6 +11,7 @@ import { FilterCoursesPipe } from '../common/pipe/filter-courses.pipe';
 import { SortCourseDirective } from '../common/directive/sort-course-directive';
 import { CourseDetailedComponent } from './course-detailed/course-detailed.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [CoursesComponent, CoursesListComponent, CoursesAddComponent, DurationPipe, FilterCoursesPipe, SortCourseDirective, CourseDetailedComponent],
@@ -20,7 +21,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ModalModule,
     ReactiveFormsModule,
     RouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ],
   exports: [
     CoursesComponent,

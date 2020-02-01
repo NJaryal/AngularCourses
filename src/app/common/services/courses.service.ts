@@ -18,6 +18,9 @@ export class CoursesService {
   public createCourse(course: any) {
     return this.http.post<string>(`${environment.coursesApi}/courses`, course);
   }
+  public getItemByText(courseText: string): Observable<Courses> {
+    return this.http.get<Courses>(`${environment.coursesApi}/courses/?textFragment=${courseText}`);
+  }
 
   public getItemById(courseId: string): Observable<Courses> {
     return this.http.get<Courses>(`${environment.coursesApi}/courses/${courseId}`);
