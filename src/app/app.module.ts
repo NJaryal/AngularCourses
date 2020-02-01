@@ -1,6 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,10 @@ import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './common/
 import { AlertComponent } from './common/alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderService } from './common/services/loader.service';
+import { reducer } from './store/reducers/auth.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthenticationEffects } from './store/effects/auth.effects';
+import { reducers } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,9 @@ import { LoaderService } from './common/services/loader.service';
     FormsModule,
     HttpClientModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    EffectsModule.forRoot([AuthenticationEffects]),
+    StoreModule.forRoot(reducers, {})
   ],
   providers: [
     AuthGuard,

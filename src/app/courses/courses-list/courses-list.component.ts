@@ -4,6 +4,9 @@ import { Courses } from 'src/app/common/models/courses.model';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/common/modal/modal.service';
 import { of, Observable } from "rxjs";
+import { User } from './../../common/models/user.model';
+import { AppState, selectAuthenticationState } from './../../store/app.state';
+import { Logout } from './../../store/actions/auth.actions';
 import {
   debounceTime,
   map,
@@ -13,7 +16,9 @@ import {
 import { fromEvent } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from 'src/app/common/services/loader.service';
-
+import { Store, State, select } from "@ngrx/store";
+import * as courseActions from "../../store/actions/course.actions";
+import * as fromCourse from "../../store/reducers/course.reducers";
 
 @Component({
   selector: 'app-courses-list',
@@ -22,13 +27,17 @@ import { LoaderService } from 'src/app/common/services/loader.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-
-  @ViewChild('movieSearchInput',{static: true}) movieSearchInput: ElementRef;
+  user:User;
+  getState: Observable<any>;
+  isAuthenticated: boolean = false;
+  courses$: Observable<Courses | any>;
+  error$: Observable<String>;
+  @ViewChild('courseSearchInput',{static: true}) courseSearchInput: ElementRef;
   apiResponse:any;
   isSearching:boolean;
   @Input() courseList: Courses;
-  courses: Courses | any;
-   data$: Observable<string[]>;
+  coursesData: Courses | any;
+  data$: Observable<string[]>;
   list$: Observable<string[]>;
   @Output() public myOutput = new EventEmitter<string>();
   @Output() public myEditEvent = new EventEmitter<string>();
@@ -42,12 +51,14 @@ export class CoursesListComponent implements OnInit {
     private router: Router,
     private modalService: ModalService,
     private spinner: NgxSpinnerService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private store: Store<AppState>
   ) {
+    this.getState = this.store.select(selectAuthenticationState);
     this.spinner.show();
     this.coursesService.getList().subscribe(
       (res: any) => {
-        this.courses = res;
+        this.coursesData = res;
         this.myupdate();
         this.spinner.hide();
       }
@@ -56,25 +67,32 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new courseActions.LoadCourses());
+    this.courses$ = this.store.pipe(select(fromCourse.getCourses));
+    this.error$ = this.store.pipe(select(fromCourse.getError));
+
     this.spinner.show();
-    fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
-      // get value
+
+
+    this.getState.subscribe((state) => {
+      this.isAuthenticated = state.isAuthenticated;
+      this.user = state.user;
+    });
+
+
+    fromEvent(this.courseSearchInput.nativeElement, 'keyup').pipe(
       map((event: any) => {
         return event.target.value;
       })
-      // if character length greater then 2
       ,filter(res => res.length > 3)
-      // Time in milliseconds between key events
       ,debounceTime(1000)
-      // If previous query is diffent from current
       ,distinctUntilChanged()
-      // subscription for response
       ).subscribe((text: string) => {
         this.isSearching = true;
         this.coursesService.getItemByText(text).subscribe((res)=>{
           console.log('res',res);
           this.isSearching = false;
-          this.courses = res;
+          this.coursesData = res;
           this.myupdate();
           this.spinner.hide();
         },(err)=>{
@@ -84,11 +102,17 @@ export class CoursesListComponent implements OnInit {
       });
 
   }
+
+  logout(): void {
+    this.store.dispatch(new Logout);
+  }
+
+
   myupdate() {
     this.cd.markForCheck();
-    if (typeof this.courses !== 'undefined') {
-      this.collection.count = this.courses.length || 0;
-      this.collection.data = this.courses;
+    if (typeof this.coursesData !== 'undefined') {
+      this.collection.count = this.coursesData.length || 0;
+      this.collection.data = this.coursesData;
       this.config = {
         itemsPerPage: 2,
         currentPage: 1,
@@ -118,6 +142,7 @@ export class CoursesListComponent implements OnInit {
 
   deletedCourse(id: string) {
     this.loaderService.isFullScreenLoader = true;
+    this.store.dispatch(new courseActions.DeleteCourses(this.coursesData.id));
     this.coursesService.deleteItem(id).
       subscribe(
         data => {

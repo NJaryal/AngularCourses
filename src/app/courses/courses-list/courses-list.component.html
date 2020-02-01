@@ -3,18 +3,26 @@
     <input
       type="text"
       placeholder="Search.."
-      name="Search" #movieSearchInput [(ngModel)]="searchText" />
+      name="Search" #courseSearchInput [(ngModel)]="searchText" />
     <button type="submit" class="d-none btn btn-success btn-lg" (click)="searchVal()">
       <i class="fa fa-search"></i>
     </button>
   </div>
 </form>
 <ngx-spinner></ngx-spinner>
-<div *ngIf="courses">
+<div *ngIf="coursesData">
+  <!-- <div
+    class="row m-lg-4 card-body mb-2"
+    *ngFor="
+      let course of (courses$ | async) | paginate: config
+    "
+    sortCourseDirective
+    [creationdate]="course.creationdate | date: 'dd-MMM-yyyy'"
+  > -->
   <div
     class="row m-lg-4 card-body mb-2"
     *ngFor="
-      let course of courses | paginate: config
+      let course of coursesData | paginate: config
     "
     sortCourseDirective
     [creationdate]="course.creationdate | date: 'dd-MMM-yyyy'"
@@ -70,7 +78,7 @@
       </div>
     </jw-modal>
   </div>
-  <div class="pagination-courses">
+  <div class="pagination-coursesData">
     <pagination-controls
       (pageChange)="pageChanged($event)"
       responsive="true"
@@ -82,7 +90,7 @@
     </button>
   </div>
 
-  <div class="alert alert-info" role="alert" *ngIf="courses.length < 1">
+  <div class="alert alert-info" role="alert" *ngIf="coursesData.length < 1">
     No available course. Please free to add new course.
   </div>
 </div>
