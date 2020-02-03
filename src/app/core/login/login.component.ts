@@ -9,6 +9,7 @@ import { AppState,selectAuthenticationState  } from '../../store/app.state';
 import { User } from 'src/app/common/models/user.model';
 import { Observable } from 'rxjs';
 import { Login } from 'src/app/store/actions/auth.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   user: User = new User();
   getState: Observable<any>;
   errorMessage: string = null;
-
+  language: string;
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -35,11 +36,13 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
     public mainService: LoaderService,
+    private translate: TranslateService,
     private store: Store<AppState>
   ) {  this.getState = this.store.select(selectAuthenticationState);}
 
   ngOnInit() {
     this.spinner.show();
+
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

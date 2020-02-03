@@ -24,7 +24,7 @@ export class CoursesAddComponent implements OnInit {
   courseDuration: number;
   isFullScreenLoader: boolean = false;
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private coursesService: CoursesService,
     private router: Router,
     private route: ActivatedRoute,
@@ -34,11 +34,13 @@ export class CoursesAddComponent implements OnInit {
 
   ngOnInit() {
     this.isFullScreenLoader = true;
-    this.createCoursessForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
+    this.createCoursessForm = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
       length: ['', [Validators.required]],
-      authors: new Array(),
+      authors: this.fb.array([
+        this.addAuthorFormGroup(),
+      ]),
       date: ['', [Validators.required]],
       isTopRated: ['', [Validators.required]]
     });
@@ -49,9 +51,23 @@ export class CoursesAddComponent implements OnInit {
     this.isFullScreenLoader = false;
   }
 
+  addAuthor(): void {
+    (<FormArray>this.createCoursessForm.get('authors')).push(this.addAuthorFormGroup())
+  }
+
+  removeAuthor(i: number): void {
+    (<FormArray>this.createCoursessForm.get('authors')).removeAt(i)
+  }
+
+  addAuthorFormGroup() : FormGroup {
+    return this.fb.group({
+      authorName: ['Nitin Jaryal', Validators.required]
+    })
+  }
+
   saveItem() {
     this.isFullScreenLoader = true;
-    if (this.createCoursessForm.valid || typeof this.selectedCourse !== "undefined") {
+    if (this.createCoursessForm.valid && typeof this.selectedCourse !== "undefined") {
       this.createCoursessForm.value.id = this.selectedCourse.id;
       this.store.dispatch(new courseActions.UpdateCourses(this.createCoursessForm.value));
       this.coursesService.updateCourse(this.createCoursessForm.value).subscribe((res) => {
@@ -74,7 +90,6 @@ export class CoursesAddComponent implements OnInit {
         this.isFullScreenLoader = false;
       });
     }
-
   }
 
   onEditIDEvent(id: string): void {

@@ -10,6 +10,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoaderService } from '../common/services/loader.service';
+import { LanguageTranslationModule } from '../common/language-translation/language-translation.module';
+import { NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, HomeComponent, LoginComponent, NotFoundComponent, RegisterComponent],
@@ -18,7 +21,9 @@ import { LoaderService } from '../common/services/loader.service';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    LanguageTranslationModule,
+    NgbDropdownModule,
   ],
   providers: [
     LoaderService
@@ -28,7 +33,8 @@ import { LoaderService } from '../common/services/loader.service';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NgbDropdownModule
   ]
 })
 export class CoreModule { }

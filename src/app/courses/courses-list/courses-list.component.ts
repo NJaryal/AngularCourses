@@ -27,14 +27,14 @@ import * as fromCourse from "../../store/reducers/course.reducers";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-  user:User;
+  user: User;
   getState: Observable<any>;
   isAuthenticated: boolean = false;
   courses$: Observable<Courses | any>;
   error$: Observable<String>;
-  @ViewChild('courseSearchInput',{static: true}) courseSearchInput: ElementRef;
-  apiResponse:any;
-  isSearching:boolean;
+  @ViewChild('courseSearchInput', { static: true }) courseSearchInput: ElementRef;
+  apiResponse: any;
+  isSearching: boolean;
   @Input() courseList: Courses;
   coursesData: Courses | any;
   data$: Observable<string[]>;
@@ -72,8 +72,6 @@ export class CoursesListComponent implements OnInit {
     this.error$ = this.store.pipe(select(fromCourse.getError));
 
     this.spinner.show();
-
-
     this.getState.subscribe((state) => {
       this.isAuthenticated = state.isAuthenticated;
       this.user = state.user;
@@ -84,29 +82,27 @@ export class CoursesListComponent implements OnInit {
       map((event: any) => {
         return event.target.value;
       })
-      ,filter(res => res.length > 3)
-      ,debounceTime(1000)
-      ,distinctUntilChanged()
-      ).subscribe((text: string) => {
-        this.isSearching = true;
-        this.coursesService.getItemByText(text).subscribe((res)=>{
-          console.log('res',res);
-          this.isSearching = false;
-          this.coursesData = res;
-          this.myupdate();
-          this.spinner.hide();
-        },(err)=>{
-          this.isSearching = false;
-          console.log('error',err);
-        });
+      , filter(res => res.length > 3)
+      , debounceTime(1000)
+      , distinctUntilChanged()
+    ).subscribe((text: string) => {
+      this.isSearching = true;
+      this.coursesService.getItemByText(text).subscribe((res) => {
+        console.log('res', res);
+        this.isSearching = false;
+        this.coursesData = res;
+        this.myupdate();
+        this.spinner.hide();
+      }, (err) => {
+        this.isSearching = false;
+        console.log('error', err);
       });
-
+    });
   }
 
   logout(): void {
     this.store.dispatch(new Logout);
   }
-
 
   myupdate() {
     this.cd.markForCheck();

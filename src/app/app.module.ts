@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
 import {BreadcrumbModule} from 'angular-crumbs';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthGuard } from './common/auth/_guards/auth.guard';
 import { AlertService, AuthService, UserService } from './common/auth/_services';
 import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './common/_helpers';
@@ -20,6 +20,8 @@ import { reducer } from './store/reducers/auth.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationEffects } from './store/effects/auth.effects';
 import { reducers } from './store/app.state';
+import { TranslateService} from '@ngx-translate/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,11 +39,13 @@ import { reducers } from './store/app.state';
     RouterModule,
     BrowserAnimationsModule,
     EffectsModule.forRoot([AuthenticationEffects]),
-    StoreModule.forRoot(reducers, {})
+    StoreModule.forRoot(reducers, {}),
+    NgbModule,
   ],
   providers: [
     AuthGuard,
     AlertService,
+    TranslateService,
     AuthService,
     UserService,
     LoaderService,

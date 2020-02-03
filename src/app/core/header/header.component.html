@@ -1,28 +1,58 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand text-white" href="#">Video Courses</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand text-white" href="#">{{
+    'courses.title' | translate
+  }}</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+  <div
+    class="collapse navbar-collapse justify-content-end"
+    id="navbarSupportedContent"
+  >
     <form class="">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link text-white" href="#">
-              <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-              <span *ngIf="user">
-                {{user.firstname}} {{user.lastname}}
-              </span>
-
-            </a>
+            <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+            <span *ngIf="user"> {{ user.firstname }} {{ user.lastname }} </span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a
+            class="nav-link dropdown-toggle text-white"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            ngbDropdownToggle
+          >
+            {{'courses.Language' | translate}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+            <a class="dropdown-item" (click)="onLangTranslate('en')">{{'courses.Language-en' | translate}}</a>
+            <a class="dropdown-item" (click)="onLangTranslate('fr')">{{'courses.Language-fr' | translate}}</a>
+          </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white"  routerLink="/login" (click)="onLogOut()">
-            <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> Log Off
-            </a>
+          <a
+            class="nav-link text-white"
+            routerLink="/login"
+            (click)="onLogOut()"
+          >
+            <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> {{'user.logoff' | translate}}
+          </a>
         </li>
       </ul>
     </form>
   </div>
 </nav>
-
