@@ -1,6 +1,6 @@
 <div class="jw-modal">
   <div class="jw-modal-body">
-    <div class="row" >
+    <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -36,14 +36,9 @@
                       Course name is required
                     </div>
                     <div
-                      *ngIf="createCoursessForm.get('name').errors.minlength"
-                    >
-                      Course name must be at least 6 characters
-                    </div>
-                    <div
                       *ngIf="createCoursessForm.get('name').errors.maxlength"
                     >
-                      Course name max length should be 20 characters
+                      Course name max length should be 50 characters
                     </div>
                   </div>
                 </div>
@@ -68,6 +63,20 @@
                       "
                     >
                       Decription is required
+                    </div>
+                    <div
+                      *ngIf="
+                        createCoursessForm.get('description').errors.minlength
+                      "
+                    >
+                      Course name must be at least 50 characters
+                    </div>
+                    <div
+                      *ngIf="
+                        createCoursessForm.get('description').errors.maxlength
+                      "
+                    >
+                      Course name max length should be 500 characters
                     </div>
                   </div>
                 </div>
@@ -136,14 +145,6 @@
                       Course - Not Top Rated
                     </label>
                   </div>
-                  <!-- <div
-                    *ngIf="createCoursessForm.get('isTopRated').errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="createCoursessForm.get('isTopRated').errors.required">
-                      IsTopRated is required
-                    </div>
-                  </div> -->
                 </div>
 
                 <div class="form-group col-md-12">
@@ -176,35 +177,41 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="form-group col-md-12">
-                  <label class="col-form-label" for="messageDuration"
-                    >Authors</label
+                  <button
+                    class="btn btn-sm btn-secondary float-right"
+                    (click)="addAuthor()"
                   >
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="authors"
-                    autocomplete="authors"
-                    formControlName="authors"
-                    [ngClass]="{
-                      'is-invalid':
-                        createCoursessForm.get('authors').errors &&
-                        (createCoursessForm.get('authors').touched ||
-                          createCoursessForm.get('authors').dirty)
-                    }"
-                  />
+                    <i class="fa fa-plus"></i> Add Authors
+                  </button>
                   <div
-                    *ngIf="
-                      createCoursessForm.get('authors').touched &&
-                      createCoursessForm.get('authors').invalid
+                    formArrayName="authors"
+                    *ngFor="
+                      let author of createCoursessForm.get('authors').value;
+                      let i = index
                     "
-                    class="invalid-feedback"
                   >
-                    <div
-                      *ngIf="createCoursessForm.get('authors').errors.required"
+                    <label class="col-form-label" [attr.for]="'authorname' + i"
+                      >Authors</label
                     >
-                      Authors field is required
+                    <div [formGroupName]="i">
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="authors"
+                          autocomplete="authors"
+                          [id]="'authorname' + i"
+                          formControlName="authorName"
+                        />
+                        <div class="input-group-append">
+                          <span
+                            class="input-group-text"
+                            (click)="removeAuthor(i)"
+                            ><i class="fa fa-minus"></i>  Authors</span
+                          >
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -215,9 +222,16 @@
                 class="btn btn-sm btn-success"
                 type="submit"
                 (click)="saveItem()"
+                [disabled]="createCoursessForm.invalid"
               >
                 <i class="fa fa-dot-circle-o"></i> Save
               </button>
+              <a
+                class="btn btn-sm btn-secondary ml-4"
+                [routerLink]="['/courses/list']"
+              >
+                <i class="fa fa-cancel"></i> Cancel
+              </a>
             </div>
           </form>
         </div>

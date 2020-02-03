@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LoaderService } from 'src/app/common/services/loader.service';
 
 @Component({
   selector: 'app-footer',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
-  constructor() { }
+  language: string;
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
+    this.translate.use(this.language);
   }
 
 }
